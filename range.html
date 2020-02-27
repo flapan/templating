@@ -1,23 +1,33 @@
 <html>
-    <head>
-        {{define "footer"}}
-  <footer>
-    <p>
-      Copyright 2020 Templates inc.
-    </p>
-    <p>
-      Contact information: <a href="mailto:someone@gsnail.com">someone@gsnail.com</a>.
-    </p>
-  </footer>
-{{end}}
-    </head>
-    <body>{{range .Widgets}}
-<pre>{{.}}</pre>
-  <div class="widget">
-    <h3 class="name">{{.Name}}</h3>
-    <span class="price">${{.Price}}</span>
-  </div>
-{{end}}
-{{template "footer"}}
+
+<head>
+    {{define "footer"}}
+    <footer>
+        <p>
+            Copyright 2020 Templates inc.
+        </p>
+        <p>
+            Contact information: <a href="mailto:someone@gsnail.com">someone@gsnail.com</a>.
+        </p>
+    </footer>
+    {{end}}
+</head>
+
+<body>
+
+    {{define "widget"}}
+        <div class="widget">
+            {{template "widget-header" .Name}}
+            <span class="price">${{.Price}}</span>
+        </div>
+    {{end}}
+
+    {{define "widget-header"}}
+        <h3 class="name">{{.}}</h3>
+    {{end}}
+
+    {{range .Widgets}}
+        {{template "widget" .}}
+    {{end}}
+    {{template "footer"}}
 </body>
-</html>
