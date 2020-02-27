@@ -1,2 +1,2 @@
 # templating
-Getting acquainted with html templates in Go
+This is etting acquainted with html templates in Go
