@@ -1,13 +1,32 @@
 package main
 
 import (
-	"html/template"
 	"net/http"
+
+	"github.com/flapan/templating/views"
 )
 
-var testTemplate *template.Template
+var index *views.View
+var contact *views.View
 
-type User struct {
+func main() {
+	index = views.NewView("bootstrap", "views/index.html")
+	contact = views.NewView("bootstrap", "views/contact.html")
+
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/contact", contactHandler)
+	http.ListenAndServe(":3000", nil)
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	index.Render(w, nil)
+}
+
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+	contact.Render(w, nil)
+}
+
+/* type User struct {
 	ID    int
 	Email string
 }
@@ -35,7 +54,10 @@ func main() {
 
 func functionHandler(w http.ResponseWriter, r *http.Request) {
 	testTemplate, err := template.New("functions.html").Funcs(template.FuncMap{
-		"hasPermission": func(eature string) bool {
+		"hasPermission": func(user User, feature string) bool {
+			if user.ID == 1 && feature == "feature-b" {
+				return true
+			}
 			return false
 		},
 	}).ParseFiles("functions.html")
@@ -89,3 +111,4 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
+*/
